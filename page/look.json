@@ -1,0 +1,45 @@
+{
+ "system": {
+  "name": "Photon"
+ },
+ "light": {
+  "ground": "#f5f6f8",
+  "card": "#ffffff",
+  "text": "#15171f",
+  "muted": "#5b6170",
+  "border": "#dde0e6",
+  "good": "#006300",
+  "warning": "#734500",
+  "bad": "#8e2626",
+  "charts": [
+   "#3048c8",
+   "#0e8f86",
+   "#c27c00",
+   "#cf3b57",
+   "#a674e2",
+   "#599234",
+   "#2d95d3",
+   "#98483c"
+  ]
+ },
+ "dark": {
+  "ground": "#0e1016",
+  "card": "#171a22",
+  "text": "#eceef3",
+  "muted": "#8f95a3",
+  "border": "#2a2e39",
+  "good": "#0ca30c",
+  "warning": "#db9300",
+  "bad": "#ec7e7e",
+  "charts": [
+   "#3a61c4",
+   "#0f9b89",
+   "#bd871c",
+   "#cb454f",
+   "#ba71cb",
+   "#5d913c",
+   "#338fc7",
+   "#98483c"
+  ]
+ }
+}

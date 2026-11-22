@@ -1,0 +1,16 @@
+{
+ "description": "Strategies, laws, funding, trade controls, programmes and published advice on photonics in North America, Europe and Asia-Pacific since January 2020, hand-compiled and checked against each linked source. Rows marked in_scope = false are kept for the record but left off the page.",
+ "schedule": "Updated roughly every two weeks.",
+ "source": {
+  "format": "json",
+  "kind": "file",
+  "name": "policies.json",
+  "url": "/_blob/REPLACE-WITH-NEW-ASSET-ID"
+ },
+ "staleAfterHours": 504,
+ "title": "Photonics policy developments since 2020",
+ "updated": {
+  "at": "2026-11-22T17:25:00Z",
+  "by": "Claude, checked against sources"
+ }
+}

@@ -1,0 +1,652 @@
+<meta name="dash-one-writer">
+<style>
+.ppt{--ppt-accent:var(--color-fg);--ppt-type:var(--color-fg-muted);--ppt-hair:1px solid var(--color-border-line);max-width:1240px;margin:0 auto;display:flex;flex-direction:column;gap:56px;font-family:var(--font-anthropic-sans);font-size:15px;line-height:1.55;color:var(--color-fg)}
+.ppt :focus-visible{outline:2px solid var(--ppt-accent);outline-offset:2px;border-radius:3px}
+:where(.ppt) button{font:inherit;color:inherit}
+
+/* masthead */
+.ppt-mast{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px 48px;align-items:end;padding-top:8px}
+.ppt-title{grid-column:1;font-family:var(--font-anthropic-serif);font-weight:400;font-size:clamp(2.3rem,4.6vw,3.6rem);line-height:1.02;letter-spacing:-.018em;margin:0}
+.ppt-subtitle{display:block;font-size:.42em;line-height:1.3;letter-spacing:0;margin-top:12px;color:var(--color-fg-muted);font-style:italic}
+.ppt-rail{grid-column:2;display:flex;gap:0;margin:0}
+.ppt-stat{padding:0 22px;border-left:var(--ppt-hair);display:flex;flex-direction:column-reverse;gap:2px;min-width:7.5rem}
+.ppt-stat:first-child{border-left:0;padding-left:0}
+.ppt-stat dd{margin:0;font-family:var(--font-anthropic-serif);font-weight:400;font-size:2.4rem;line-height:1;font-variant-numeric:tabular-nums lining-nums;min-height:1em}
+.ppt-stat dt{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);line-height:1.35;max-width:9rem}
+.ppt-def{grid-column:1 / -1;font-size:1.12rem;line-height:1.6;max-width:66ch;margin:0}
+.ppt-spectrum{grid-column:1 / -1;margin:0;display:flex;flex-direction:column;gap:8px}
+.ppt-spectrum-chart{position:relative;width:100%;min-height:78px}
+.ppt-spectrum-band{fill:var(--color-fg)}
+.ppt-spectrum-line{stroke:var(--color-bg);stroke-width:1.3px;opacity:.92}
+.ppt-spectrum-line.is-month{opacity:.5;stroke-dasharray:2 2}
+.ppt-spectrum-line.is-sel{stroke-width:3.4px;opacity:1}
+.ppt-spectrum-line.is-hot{stroke-width:2.6px;opacity:1}
+.ppt-spectrum-tick{stroke:var(--color-border-line)}
+.ppt-spectrum-sel{fill:var(--ppt-accent)}
+.ppt-spectrum figcaption,.ppt-spectrum-cap{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0}
+.ppt-mast-foot{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:24px 48px;align-items:start}
+.ppt-reading{margin:0;padding:2px 0 2px 20px;border-left:3px solid var(--ppt-accent)}
+.ppt-reading-k{display:block;font-size:var(--cds-font-size-caption);font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted);margin-bottom:4px}
+.ppt-reading p{margin:0;font-family:var(--font-anthropic-serif);font-size:1.12rem;line-height:1.55}
+.ppt-meta{display:flex;flex-direction:column;gap:10px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);line-height:1.55}
+.ppt-meta p{margin:0}
+.ppt-meta b{color:var(--color-fg);font-weight:var(--cds-font-weight-medium)}
+.ppt-notice{margin:0;font-size:var(--cds-font-size-caption);padding:8px 12px;border:var(--ppt-hair);border-left:3px solid var(--color-warn);border-radius:4px;color:var(--color-fg)}
+.ppt-linkbtn{background:none;border:0;padding:0;cursor:pointer;text-align:left;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--color-border-line)}
+.ppt-linkbtn:hover{text-decoration-color:currentColor}
+.ppt-statlink{background:none;border:0;padding:0;cursor:pointer;text-align:left;font-size:inherit;color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--color-border-line)}
+#kpi-open{cursor:pointer}
+#kpi-open:hover .ppt-statlink{color:var(--color-fg);text-decoration-color:currentColor}
+.ppt-mast-toggle{display:none;grid-column:1 / -1;justify-self:start;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-top:-16px}
+.ppt-next{grid-column:1 / -1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:6px 24px;align-items:baseline;padding:12px 18px;border:var(--ppt-hair);border-left:3px solid var(--color-warn);border-radius:6px;background:var(--color-panel)}
+.ppt-next[hidden]{display:none}
+.ppt-next-h{display:flex;gap:4px 10px;align-items:baseline;flex-wrap:wrap}
+.ppt-next-k{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-next-d{font-family:var(--font-anthropic-serif);font-size:1.15rem;font-variant-numeric:tabular-nums lining-nums}
+.ppt-next-w{font-size:var(--cds-font-size-caption);font-weight:var(--cds-font-weight-medium)}
+.ppt-next-b{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ppt-next-t{background:none;border:0;padding:0;text-align:left;cursor:pointer;line-height:1.4}
+.ppt-next-t:hover{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--color-border-line)}
+.ppt-next-j{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-next-all{font-size:var(--cds-font-size-caption);white-space:nowrap}
+.ppt-since{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:12px 18px;border:var(--ppt-hair);border-left:3px solid var(--ppt-accent);border-radius:6px;background:var(--color-panel);font-size:14px}
+.ppt-since[hidden]{display:none}
+.ppt-since-m{flex:1 1 320px}
+.ppt-since-a{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.ppt-since-a .ppt-linkbtn{font-size:var(--cds-font-size-caption)}
+.ppt-newtag{display:inline-block;font-size:11px;font-weight:var(--cds-font-weight-medium);line-height:1.6;padding:0 7px;border-radius:999px;background:var(--ppt-accent);color:var(--color-bg);vertical-align:1px;white-space:nowrap}
+.ppt-new-foot{margin:0;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);line-height:1.6}
+.ppt-new-foot[hidden]{display:none}
+.ppt-new-foot a{color:var(--color-fg);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--color-border-line)}
+.ppt-new-foot a:hover{text-decoration-color:currentColor}
+.ppt-more-wrap{display:flex;justify-content:center;padding-top:4px}
+.ppt-phone-only{display:none}
+#log-h{scroll-margin-top:72px}
+
+/* sticky bar: sections + live count */
+.ppt-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:4px 18px;flex-wrap:wrap;padding:10px 0;background:var(--color-bg);border-top:var(--ppt-hair);border-bottom:var(--ppt-hair);margin-bottom:-32px}
+.ppt-nav{display:flex;gap:2px;flex-wrap:wrap}
+.ppt-jump{background:none;border:0;padding:5px 10px;border-radius:999px;cursor:pointer;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-jump:hover{color:var(--color-fg);background:var(--color-panel)}
+.ppt-jump-m{display:none}
+.ppt-bar .ppt-showing{margin-left:auto;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);font-variant-numeric:tabular-nums}
+.ppt-showing b{color:var(--color-fg);font-weight:var(--cds-font-weight-medium)}
+
+/* section heads */
+.ppt-section{display:flex;flex-direction:column;gap:14px;min-width:0;scroll-margin-top:64px}
+.ppt-head2{display:flex;flex-direction:column;gap:4px;max-width:72ch}
+.ppt-h2{font-family:var(--font-anthropic-serif);font-weight:400;font-size:1.65rem;line-height:1.15;letter-spacing:-.01em;margin:0}
+.ppt-h3{font-family:var(--font-anthropic-serif);font-weight:400;font-size:1.22rem;line-height:1.2;margin:0}
+.ppt-note{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption);margin:0;line-height:1.55}
+
+/* latest */
+.ppt-new-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));column-gap:32px;border-top:var(--ppt-hair)}
+.ppt-new-list>li{border-bottom:var(--ppt-hair)}
+.ppt-new-btn{display:grid;grid-template-columns:5.6rem minmax(0,1fr);gap:14px;width:100%;height:100%;text-align:left;background:none;border:0;padding:13px 0;cursor:pointer}
+.ppt-new-btn:hover .ppt-new-t{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--color-border-line)}
+.ppt-new-d{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);font-variant-numeric:tabular-nums;padding-top:2px}
+.ppt-new-b{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ppt-new-j{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-new-t{line-height:1.4}
+
+/* filters */
+.ppt-filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ppt-search{flex:1 1 260px;min-width:180px;font:inherit;font-size:var(--cds-font-size-body);color:var(--color-fg);background-color:var(--color-bg);border:var(--ppt-hair);border-radius:999px;padding:8px 16px}
+.ppt-search:focus{border-color:var(--ppt-accent);outline:none}
+.ppt-filters .dash-select{flex:0 1 auto;max-width:16rem}
+.ppt-more{flex-basis:100%;order:5}
+.ppt-more>summary{cursor:pointer;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);width:max-content;padding:2px 0}
+.ppt-more-body{display:flex;flex-wrap:wrap;gap:10px;padding-top:10px}
+.ppt-more-body .dash-select{max-width:16rem}
+.ppt-btn{font-size:var(--cds-font-size-caption);background:none;border:var(--ppt-hair);border-radius:999px;padding:7px 14px;cursor:pointer;white-space:nowrap;color:var(--color-fg)}
+.ppt-btn:hover{border-color:var(--color-fg-muted)}
+.ppt-btn:disabled{opacity:.4;cursor:default}
+.ppt-btn--primary{background:var(--color-fg);color:var(--color-bg);border-color:var(--color-fg)}
+.ppt-btn--primary:hover{opacity:.88}
+.ppt-msgline{flex-basis:100%;order:6;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0}
+
+/* timeline */
+.ppt-howto{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:4px 22px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0 0 6px}
+.ppt-leg{display:inline-flex;align-items:center;gap:7px;font-size:var(--cds-font-size-caption);background:none;border:0;padding:3px 0;cursor:pointer}
+.ppt-leg.is-dim{opacity:.38}
+.ppt-leg[aria-pressed='true']{text-decoration:underline;text-underline-offset:4px}
+.ppt-sym{width:12px;height:12px;flex:none;overflow:visible}
+.ppt-sym *{fill:var(--cds-chart-muted)}
+.ppt-sym.is-hollow *{fill:none;stroke:var(--color-fg-muted);stroke-width:1.6}
+.ppt-chart{position:relative;width:100%;min-height:120px}
+.ppt-chart--timeline{min-height:340px}
+.ppt-chart--year{min-height:250px}
+.ppt-svg{display:block;width:100%;overflow:visible}
+.ppt-svg .tick text,.ppt-axis-label{fill:var(--cds-text-secondary);font-size:var(--cds-font-size-caption);font-family:var(--font-anthropic-sans)}
+.ppt-svg .domain{display:none}
+.ppt-svg .tick line{stroke:var(--cds-chart-grid)}
+.ppt-lane-band{fill:var(--color-panel)}
+.ppt-lane-band.is-alt{fill:transparent}
+.ppt-lane-label{fill:var(--color-fg);font-family:var(--font-anthropic-serif);font-size:15px}
+.ppt-today{stroke:var(--ppt-accent);stroke-width:1.5px}
+.ppt-today-label{fill:var(--cds-text-secondary);font-size:var(--cds-font-size-caption)}
+.ppt-bar-label{fill:var(--color-fg);font-size:var(--cds-font-size-caption)}
+.ppt-bar-value{fill:var(--cds-text-secondary);font-size:var(--cds-font-size-caption);font-variant-numeric:tabular-nums}
+.ppt-caveat{fill:var(--cds-text-secondary);font-size:var(--cds-font-size-caption);font-style:italic}
+.ppt-clickable{cursor:pointer}
+.ppt-mark{transition:opacity .15s}
+.ppt-mark:focus{outline:none}
+.ppt-mark:focus-visible{stroke:var(--ppt-accent)!important;stroke-width:3px!important}
+.ppt-msg{color:var(--color-fg-muted);font-size:var(--cds-font-size-caption);padding:8px 0}
+.ppt-msg:empty{display:none}
+.ppt-tip{position:absolute;z-index:6;pointer-events:none;max-width:290px;background:var(--cds-surface-popover);border:1px solid var(--cds-border);box-shadow:var(--cds-shadow-popover);border-radius:6px;padding:9px 11px;font-size:var(--cds-font-size-caption);line-height:1.4;color:var(--color-fg)}
+.ppt-tip-k{color:var(--cds-text-secondary)}
+.ppt-tip-t{font-weight:var(--cds-font-weight-medium);margin:3px 0}
+
+/* selected entry: the one raised surface on the page */
+#detail{scroll-margin-top:64px}
+.ppt-detail-wrap{background:var(--color-panel);border:var(--ppt-hair);border-radius:10px;padding:26px 30px 24px;box-shadow:inset 4px 0 0 var(--ppt-type);display:flex;flex-direction:column;gap:12px}
+.ppt-detail-k{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:0}
+.ppt-detail{display:flex;flex-direction:column;gap:12px;min-height:140px}
+.ppt-d-meta{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);display:flex;flex-wrap:wrap;gap:0}
+.ppt-d-meta>span+span::before{content:'';display:inline-block;width:1px;height:.8em;background:var(--color-border-line);margin:0 10px;vertical-align:-1px}
+.ppt-d-title{font-family:var(--font-anthropic-serif);font-weight:400;font-size:1.55rem;line-height:1.2;margin:0;max-width:40ch}
+.ppt-d-tags{display:flex;flex-wrap:wrap;gap:6px}
+.ppt-d-summary{margin:0;line-height:1.6;max-width:70ch}
+.ppt-d-dl{display:grid;grid-template-columns:10rem minmax(0,1fr);gap:7px 18px;margin:4px 0 0;padding-top:14px;border-top:var(--ppt-hair);font-size:var(--cds-font-size-caption)}
+.ppt-d-dl dt{color:var(--color-fg-muted)}
+.ppt-d-dl dd{margin:0}
+.ppt-d-dl dd>a+a{margin-left:12px}
+.ppt-d-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:6px}
+.ppt-d-done{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-d-copy{width:100%;min-height:5.5em;font:inherit;font-size:var(--cds-font-size-caption);color:var(--color-fg);background:var(--color-bg);border:var(--ppt-hair);border-radius:6px;padding:8px 10px;box-sizing:border-box}
+.ppt-d-related{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:3px}
+.ppt-pill{display:inline-flex;align-items:center;gap:6px;border:var(--ppt-hair);border-radius:999px;padding:2px 10px;font-size:var(--cds-font-size-caption);white-space:nowrap;line-height:1.55;background:var(--color-bg)}
+.ppt-dot{width:7px;height:7px;border-radius:50%;display:inline-block;background:var(--cds-chart-muted);flex:none}
+.ppt-dot--pending{background:var(--color-warn)}
+.ppt-dot--temp{background:var(--color-bad)}
+.ppt-dot--done{background:var(--color-ok)}
+.ppt-dot--open{background:none;border:1.5px solid var(--color-warn);box-sizing:border-box}
+.ppt-link{color:inherit;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--color-border-line)}
+.ppt-link:hover{text-decoration-color:currentColor}
+
+/* coming up: an agenda, not cards */
+.ppt-watch{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));column-gap:40px;border-top:var(--ppt-hair)}
+.ppt-watch>li{border-bottom:var(--ppt-hair)}
+.ppt-w-btn{display:grid;grid-template-columns:7.2rem minmax(0,1fr);gap:16px;width:100%;text-align:left;background:none;border:0;padding:14px 0;cursor:pointer;height:100%}
+.ppt-w-btn:hover .ppt-w-note{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--color-border-line)}
+.ppt-w-date{font-family:var(--font-anthropic-serif);font-size:1.05rem;line-height:1.3;font-variant-numeric:tabular-nums lining-nums}
+.ppt-w-date.is-pending{font-family:var(--font-anthropic-sans);font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);padding-top:3px}
+.ppt-w-note{line-height:1.4}
+.ppt-w-sub{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-top:3px;line-height:1.4}
+
+/* patterns */
+.ppt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:44px 56px}
+.ppt-panel{display:flex;flex-direction:column;gap:10px;min-width:0;padding-top:16px;border-top:2px solid var(--color-fg)}
+
+/* phone list */
+.ppt-cards{list-style:none;margin:0;padding:0;border-top:var(--ppt-hair)}
+.ppt-c{border-bottom:var(--ppt-hair);padding:14px 0;display:flex;flex-direction:column;gap:7px}
+.ppt-c-k{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap}
+.ppt-c-t{font-family:var(--font-anthropic-serif);font-weight:400;font-size:1.12rem;line-height:1.3;margin:0}
+.ppt-c-s{font-size:14px;line-height:1.5;margin:0}
+.ppt-c-a{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:var(--cds-font-size-caption)}
+
+/* table */
+.ppt-table-wrap{overflow-x:auto;border-top:2px solid var(--color-fg)}
+.ppt-table{border-collapse:collapse;width:100%;min-width:980px;font-size:var(--cds-font-size-caption);table-layout:fixed}
+.ppt-table th{box-sizing:border-box}
+.ppt-table th:nth-child(1){width:8.5%}.ppt-table th:nth-child(2){width:9%}.ppt-table th:nth-child(3){width:23%}
+.ppt-table th:nth-child(4){width:11%}.ppt-table th:nth-child(5){width:15%}.ppt-table th:nth-child(6){width:10.5%}
+.ppt-table .ppt-pill{white-space:normal}
+.ppt-clamp{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ppt-table th{text-align:left;font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted);padding:10px 12px;border-bottom:var(--ppt-hair);white-space:nowrap;background:var(--color-bg);position:sticky;top:0}
+.ppt-table th[data-sort]{cursor:pointer}
+.ppt-table th[aria-sort='ascending']::after{content:' ↑'}
+.ppt-table th[aria-sort='descending']::after{content:' ↓'}
+.ppt-table td{padding:11px 12px;border-bottom:var(--ppt-hair);vertical-align:top;line-height:1.45}
+.ppt-table tbody tr{cursor:pointer}
+.ppt-table tbody tr:hover td{background:var(--color-panel)}
+.ppt-table tbody tr.is-selected td{background:var(--color-panel);box-shadow:inset 0 -1px 0 var(--ppt-accent)}
+.ppt-td-date{white-space:nowrap;font-variant-numeric:tabular-nums}
+.ppt-td-title{font-size:14px}
+.ppt-td-sum{color:var(--color-fg-muted)}
+.ppt-td-type{white-space:normal}
+
+/* method */
+.ppt-about{border-top:2px solid var(--color-fg);padding-top:18px;scroll-margin-top:64px}
+.ppt-about>summary{cursor:pointer;font-family:var(--font-anthropic-serif);font-size:1.65rem;line-height:1.2;list-style-position:outside}
+.ppt-about-body{display:grid;grid-template-columns:13rem minmax(0,68ch);gap:10px 40px;margin-top:22px;font-size:14px;line-height:1.6}
+.ppt-about-body>h3{grid-column:1;font-family:var(--font-anthropic-serif);font-weight:400;font-size:1.05rem;line-height:1.35;margin:0;padding-top:14px;border-top:var(--ppt-hair)}
+.ppt-about-body>:not(h3){grid-column:2;margin:0}
+.ppt-about-body>h3+*{padding-top:14px;border-top:var(--ppt-hair)}
+.ppt-about-body dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 16px}
+.ppt-about-body dt{font-weight:var(--cds-font-weight-medium)}
+.ppt-about-body dd{margin:0;color:var(--color-fg-muted)}
+.ppt-about-body b{font-weight:var(--cds-font-weight-medium)}
+.ppt-fx{border-collapse:collapse;font-variant-numeric:tabular-nums}
+.ppt-fx td{padding:1px 18px 1px 0}
+.ppt-log{margin:0;padding-left:1.1rem}
+.ppt-log li{margin-bottom:8px}
+.ppt-foot{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin:-24px 0 0;line-height:1.55;max-width:80ch}
+abbr[title]{text-decoration:underline dotted;text-underline-offset:2px;cursor:help}
+
+/* shortcuts, chips, search hint, empty state */
+.ppt-lenses{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.ppt-lenses-k{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);margin-right:4px}
+.ppt-lens{font-size:var(--cds-font-size-caption);background:none;border:var(--ppt-hair);border-radius:999px;padding:6px 13px;cursor:pointer;color:var(--color-fg)}
+.ppt-lens:hover{border-color:var(--color-fg-muted)}
+.ppt-lens[aria-pressed='true']{background:var(--color-fg);color:var(--color-bg);border-color:var(--color-fg)}
+.ppt-hint{margin:0;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-hint:empty{display:none}
+.ppt-chips{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:var(--cds-font-size-caption);min-height:28px}
+.ppt-chips-k,.ppt-chips-none{color:var(--color-fg-muted)}
+.ppt-chip{display:inline-flex;align-items:center;gap:8px;font-size:var(--cds-font-size-caption);background:var(--color-panel);border:var(--ppt-hair);border-radius:999px;padding:4px 6px 4px 12px;cursor:pointer;color:var(--color-fg)}
+.ppt-chip:hover{border-color:var(--color-fg-muted)}
+.ppt-chip-x{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--color-bg);color:var(--color-fg-muted);font-size:13px;line-height:1}
+.ppt-chips-clear{margin-left:6px;font-size:var(--cds-font-size-caption)}
+.ppt-empty:empty{display:none}
+.ppt-empty{border:var(--ppt-hair);border-left:3px solid var(--ppt-accent);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.ppt-empty-t{margin:0;font-family:var(--font-anthropic-serif);font-size:1.1rem}
+.ppt-empty-list{display:flex;flex-wrap:wrap;gap:8px}
+mark.ppt-hl{background:color-mix(in srgb,var(--ppt-accent) 22%,transparent);color:inherit;border-radius:2px;padding:0 1px}
+
+/* period strip brush and period buttons */
+.ppt-spectrum-line.is-out{opacity:.22}
+.ppt-brush .selection{fill:var(--ppt-accent);fill-opacity:.28;stroke:var(--ppt-accent);stroke-width:1.5px}
+.ppt-head2--row{flex-direction:row;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;max-width:none}
+.ppt-periods{display:inline-flex;border:var(--ppt-hair);border-radius:999px;padding:2px}
+.ppt-period{font-size:var(--cds-font-size-caption);background:none;border:0;border-radius:999px;padding:5px 12px;cursor:pointer;color:var(--color-fg-muted)}
+.ppt-period[aria-pressed='true']{background:var(--color-fg);color:var(--color-bg)}
+
+/* timeline with the selected entry beside it */
+.ppt-explorer{display:flex;flex-direction:column;gap:56px;min-width:0}
+@media (min-width:1100px){
+  .ppt-explorer{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:36px;align-items:start}
+  .ppt-explorer #detail{position:sticky;top:64px;max-height:calc(100vh - 80px);overflow:auto;border-radius:10px}
+  .ppt-explorer .ppt-detail-wrap{padding:20px 22px}
+  .ppt-explorer .ppt-d-title{font-size:1.3rem}
+  .ppt-explorer .ppt-d-dl{grid-template-columns:1fr;gap:1px 0}
+  .ppt-explorer .ppt-d-dl dd{margin-bottom:8px}
+}
+.ppt-d-nav{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;padding-bottom:12px;border-bottom:var(--ppt-hair)}
+.ppt-d-pos{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);font-variant-numeric:tabular-nums;flex:1 1 auto;text-align:center}
+.ppt-d-close{font-size:var(--cds-font-size-caption);flex-basis:100%;text-align:center}
+
+/* country briefs */
+.ppt-tiles{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.ppt-tile{display:grid;grid-template-columns:1fr auto;grid-auto-rows:auto;align-content:start;gap:2px 10px;width:100%;height:100%;text-align:left;background:none;border:var(--ppt-hair);border-radius:8px;padding:10px 12px;cursor:pointer}
+.ppt-tile:hover{border-color:var(--color-fg-muted)}
+.ppt-tile[aria-pressed='true']{border-color:var(--color-fg);box-shadow:inset 0 0 0 1px var(--color-fg);background:var(--color-panel)}
+.ppt-tile-name{font-family:var(--font-anthropic-serif);font-size:1.02rem;line-height:1.25}
+.ppt-tile-n{font-family:var(--font-anthropic-serif);font-size:1.3rem;line-height:1.1;font-variant-numeric:tabular-nums lining-nums;grid-row:1 / span 3;grid-column:2;align-self:start}
+.ppt-tile-sub{grid-column:1}
+.ppt-tile-sub{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-profile{position:relative;display:flex;flex-direction:column;gap:14px}
+.ppt-prof-hint{padding:4px 0}
+.ppt-prof-bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.ppt-prof-bar .dash-select{max-width:16rem}
+.ppt-prof-cols{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+@media (min-width:760px){.ppt-prof-cols.is-compare{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ppt-prof{background:var(--color-panel);border:var(--ppt-hair);border-radius:10px;padding:22px 24px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.ppt-prof-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.ppt-prof-name{font-family:var(--font-anthropic-serif);font-weight:400;font-size:1.6rem;line-height:1.1;margin:0}
+.ppt-prof-region{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-prof-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:0;border-top:var(--ppt-hair);border-bottom:var(--ppt-hair)}
+.ppt-prof-stats>div{display:flex;flex-direction:column-reverse;gap:2px;padding:10px 12px;border-left:var(--ppt-hair)}
+.ppt-prof-stats>div:first-child{border-left:0;padding-left:0}
+.ppt-prof-stats dd{margin:0;font-family:var(--font-anthropic-serif);font-size:1.35rem;line-height:1.1;font-variant-numeric:tabular-nums lining-nums}
+.ppt-prof-stats dt{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-prof-mix{display:flex;flex-direction:column;gap:8px}
+.ppt-mixbar{display:flex;height:10px;border-radius:5px;overflow:hidden;gap:2px;background:var(--color-bg)}
+.ppt-mixseg{display:block;height:100%}
+.ppt-mixkey{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 14px;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-mixkey b{color:var(--color-fg);font-weight:var(--cds-font-weight-medium)}
+.ppt-mixsw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:0}
+.ppt-mini-band{fill:var(--color-bg)}
+.ppt-mini-line{stroke-width:2px}
+.ppt-prof-block{display:flex;flex-direction:column;gap:6px}
+.ppt-prof-h{margin:0;font-size:var(--cds-font-size-caption);font-weight:var(--cds-font-weight-medium);color:var(--color-fg-muted)}
+.ppt-prof-list{list-style:none;margin:0;padding:0;border-top:var(--ppt-hair)}
+.ppt-prof-list>li{border-bottom:var(--ppt-hair)}
+.ppt-prof-item{display:grid;grid-template-columns:5.2rem minmax(0,1fr);gap:2px 12px;width:100%;text-align:left;background:none;border:0;padding:8px 0;cursor:pointer;font-size:14px;line-height:1.4}
+.ppt-prof-item:hover .ppt-prof-title{text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--color-border-line)}
+.ppt-prof-date{font-size:var(--cds-font-size-caption);color:var(--color-fg-muted);padding-top:1px;font-variant-numeric:tabular-nums}
+.ppt-prof-amt{grid-column:2;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
+.ppt-prof-actions{display:flex;flex-wrap:wrap;gap:8px}
+
+#cards{display:none}
+@media (max-width:900px){
+  .ppt-mast{grid-template-columns:1fr}
+  .ppt-rail{grid-column:1}
+  .ppt-mast-foot{grid-template-columns:1fr}
+  .ppt-about-body{grid-template-columns:1fr}
+  .ppt-about-body>h3,.ppt-about-body>:not(h3){grid-column:1}
+  .ppt-about-body>h3+*{padding-top:0;border-top:0}
+}
+@media (max-width:600px){
+  .ppt{gap:40px;font-size:15px}
+  .ppt-def{font-size:1rem}
+  #timeline,#charts,#all-developments{display:none}
+  .ppt-jump-d{display:none}
+  .ppt-jump-m{display:inline-block}
+  #cards{display:flex}
+  .ppt-explorer{order:1}
+  #cards{order:2}
+  #about{order:4}
+  .ppt-foot{order:5;margin-top:0}
+  .ppt-stat{padding:0 14px;min-width:0}
+  .ppt-stat dd{font-size:1.8rem}
+  .ppt-bar{margin-bottom:-16px}
+  .ppt-bar .ppt-showing{margin-left:0;width:100%}
+  .ppt-filters .dash-select,.ppt-more-body .dash-select{flex:1 1 calc(50% - 10px);max-width:none;min-width:0}
+  .ppt-search{flex-basis:100%}
+  .ppt-new-list li:nth-child(n+4){display:none}
+  .ppt-detail-wrap{padding:20px 18px}
+  .ppt-d-dl{grid-template-columns:1fr;gap:2px 0}
+  .ppt-d-dl dd{margin-bottom:8px}
+  .ppt-w-btn{grid-template-columns:6rem minmax(0,1fr)}
+  .ppt-prof{padding:18px 16px}
+  .ppt-prof-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ppt-prof-stats>div:nth-child(3){border-left:0;padding-left:0}
+  .ppt-tiles{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(150px,46%);overflow-x:auto;padding-bottom:6px;scroll-snap-type:x proximity}
+  .ppt-tiles>li{scroll-snap-align:start}
+  .ppt-lenses-k{flex-basis:100%}
+  .ppt-mast-toggle{display:inline-block}
+  .ppt-mast:not(.is-open) .ppt-def{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .ppt-mast:not(.is-open) .ppt-reading,.ppt-mast:not(.is-open) #scope>p:first-child,.ppt-mast:not(.is-open) .ppt-spectrum figcaption{display:none}
+  .ppt-next{grid-template-columns:1fr;gap:6px;padding:12px 14px}
+  #detail.is-idle{display:none}
+  .ppt-wide-only{display:none}
+  .ppt-phone-only{display:inline}
+}
+@media (prefers-reduced-motion:reduce){.ppt-mark{transition:none}}
+@media print{.ppt-bar{position:static}.ppt-tip{display:none}.ppt-search,.ppt-btn,.ppt-more,.ppt-nav{display:none}}
+</style>
+
+<div class='ppt' id='top'>
+  <header class='ppt-mast' id='overview'>
+    <h1 class='ppt-title'>Photonics Policy Tracker<span class='ppt-subtitle'>North America, Europe &amp; Asia-Pacific, January 2020 to today</span></h1>
+    <dl class='ppt-rail' id='kpis'>
+      <div class='ppt-stat' id='kpi-entries'><dt>developments shown</dt><dd data-draw='k-entries' data-source='summary' data-field='entries' data-row='0'>—</dd></div>
+      <div class='ppt-stat' id='kpi-juris'><dt>countries and the EU</dt><dd data-draw='k-juris' data-source='summary' data-field='jurisdictions' data-row='0'>—</dd></div>
+      <div class='ppt-stat' id='kpi-open'><dt><button type='button' class='ppt-statlink' data-jump='watch'>awaiting a decision</button></dt><dd data-draw='k-open' data-source='summary' data-field='open' data-row='0'>—</dd></div>
+    </dl>
+    <p class='ppt-def' data-read lang='en'>Photonics is technology that makes, guides and detects light: lasers, fibre-optic links, optical chips and sensors. It carries data-centre and telecom traffic, makes advanced chipmaking possible and is at the heart of LiDAR and some quantum computers. This tracker lists what governments, and the groups advising them, have done about it, with a link to the source for every entry.</p>
+    <button type='button' class='ppt-linkbtn ppt-mast-toggle' id='ppt-mast-more' aria-expanded='false'><span id='mast-more-l'>More about this tracker</span><span id='mast-less-l' hidden>Show less</span></button>
+    <div class='ppt-next' data-draw='next-deadline' data-source='next_deadline' aria-live='polite' hidden></div>
+    <figure class='ppt-spectrum' id='spectrum'>
+      <div class='ppt-spectrum-chart' data-draw='spectrum' data-source='filtered'></div>
+      <figcaption>Each line is one development, by date. Point at a line to preview it, click to open it, or drag across the strip to zoom the page to that period. Recent years are covered more densely.</figcaption>
+    </figure>
+    <div class='ppt-mast-foot'>
+      <blockquote class='ppt-reading' id='reading'>
+        <span class='ppt-reading-k'>Compiler's reading</span>
+        <p data-read lang='en'>Since 2025, governments have begun to name photonics in its own right: in the EU's proposed Chips Act 2.0, the US national-security technology strategy, advice to the UK Prime Minister, Taiwan's “economic shield” priorities and India's Semicon 2.0 incentives. US measures are also moving from raw materials such as gallium towards finished optical products, with a bill on Chinese LiDAR and a reported plan to bar new Chinese optical transceivers.</p>
+      </blockquote>
+      <div class='ppt-meta' id='scope'>
+        <p data-read lang='en'><b>Scope.</b> National and EU-level action in North America, Europe and Asia-Pacific; selective, not exhaustive. Not covered: the Middle East, Latin America, Africa and multilateral bodies. Coverage is thinner for smaller European countries and China's provincial plans.</p>
+        <p id='updated'><b>Last updated <span data-draw='updated' data-source='changelog' data-field='date' data-row='0'>—</span>.</b> Updated roughly every two weeks. <button type='button' class='ppt-linkbtn' id='ppt-to-about'>How this is compiled, and how to report an error</button></p>
+        <p class='ppt-notice' id='ppt-stale' hidden>This page may be out of date: its last update was more than three weeks ago. Check the linked sources before relying on a status.</p>
+        <p class='ppt-notice' id='ppt-archived' hidden>This tracker is no longer updated. Entries are left as they stood at the last update.</p>
+      </div>
+    </div>
+  </header>
+
+  <div class='ppt-bar' id='bar'>
+    <nav class='ppt-nav' aria-label='Sections of this page'>
+      <button type='button' class='ppt-jump' data-jump='new'>Latest</button>
+      <button type='button' class='ppt-jump' data-jump='watch'>Coming up</button>
+      <button type='button' class='ppt-jump' data-jump='countries'>Countries</button>
+      <button type='button' class='ppt-jump ppt-jump-d' data-jump='timeline'>Timeline</button>
+      <button type='button' class='ppt-jump ppt-jump-m' data-jump='cards'>Entries</button>
+      <button type='button' class='ppt-jump ppt-jump-d' data-jump='charts'>Patterns</button>
+      <button type='button' class='ppt-jump ppt-jump-d' data-jump='all-developments'>All entries</button>
+      <button type='button' class='ppt-jump' data-jump='about'>Method</button>
+    </nav>
+    <span class='ppt-showing' data-draw='showing'>—</span>
+  </div>
+
+  <section class='ppt-section' id='new'>
+    <div class='ppt-head2'>
+      <h2 class='ppt-h2'>Latest developments</h2>
+      <p class='ppt-note'>The newest entries by the date they happened. Select one to open it.</p>
+    </div>
+    <div class='ppt-since' data-draw='since' data-source='in_scope changelog' aria-live='polite' hidden></div>
+    <ul class='ppt-new-list' data-draw='new-list' data-source='recent'></ul>
+    <p class='ppt-new-foot' data-draw='new-foot' data-source='whats_new changelog' hidden></p>
+  </section>
+
+  <section class='ppt-section' id='watch'>
+    <div class='ppt-head2'>
+      <h2 class='ppt-h2'>Coming up</h2>
+      <p class='ppt-note'>Scheduled expiries and deadlines first, then proposals and reported plans still awaiting a decision. Select one to open it.</p>
+    </div>
+    <ol class='ppt-watch' data-draw='watch' data-source='watch'></ol>
+    <div class='ppt-more-wrap'><button type='button' class='ppt-btn' id='ppt-more-watch' aria-expanded='false' hidden><span id='watch-more-l'>Show everything coming up</span><span id='watch-less-l' hidden>Show fewer</span></button></div>
+  </section>
+
+  <section class='ppt-section' id='countries'>
+    <div class='ppt-head2'>
+      <h2 class='ppt-h2'>Country briefs</h2>
+      <p class='ppt-note'>Pick a country, or the EU, for a one-screen summary of what it has done; add a second to compare them side by side. Briefs cover every entry for the country, whatever the filters.</p>
+    </div>
+    <ul class='ppt-tiles' data-draw='country-tiles' data-source='countries'></ul>
+    <div class='ppt-profile' data-draw='profile' data-source='profiles profile_types'></div>
+  </section>
+
+  <section class='ppt-section' id='explore'>
+    <div class='ppt-head2'>
+      <h2 class='ppt-h2'>Find developments</h2>
+      <p class='ppt-note'>Search or filter here; every list, chart and count below follows.</p>
+    </div>
+    <div class='ppt-lenses' role='group' aria-label='Shortcuts'>
+      <span class='ppt-lenses-k'>Shortcuts</span>
+      <button type='button' class='ppt-lens' data-lens='controls' aria-pressed='false'>Export controls &amp; materials</button>
+      <button type='button' class='ppt-lens' data-lens='funding' aria-pressed='false'>Public funding</button>
+      <button type='button' class='ppt-lens' data-lens='chips' aria-pressed='false'>Photonic chips</button>
+      <button type='button' class='ppt-lens' data-lens='quantum' aria-pressed='false'>Quantum</button>
+      <button type='button' class='ppt-lens' data-lens='uschina' aria-pressed='false'>US and China</button>
+      <button type='button' class='ppt-lens' data-lens='open' aria-pressed='false'>Still open</button>
+    </div>
+    <form class='ppt-filters' id='filters' role='search' aria-label='Filter developments'>
+      <input type='search' class='ppt-search' id='ppt-q' placeholder='Search titles, summaries and sources' aria-label='Search developments' autocomplete='off'>
+      <select class='dash-select' data-draw='f-region' aria-label='Region' data-source='in_scope' data-field='region'></select>
+      <select class='dash-select' data-draw='f-type' aria-label='Type of measure' data-source='in_scope' data-field='type'></select>
+      <button type='button' class='ppt-btn' id='ppt-reset'>Reset filters</button>
+      <button type='button' class='ppt-btn ppt-btn--primary' id='ppt-csv'>Download this view (CSV)</button>
+      <details class='ppt-more' id='more-filters'>
+        <summary>More filters: country, technology, status, scope and years</summary>
+        <div class='ppt-more-body'>
+          <select class='dash-select' data-draw='f-jurisdiction' aria-label='Country or EU' data-source='in_scope' data-field='jurisdiction'></select>
+          <select class='dash-select' data-draw='f-tech' aria-label='Technology' data-source='in_scope' data-field='technology'></select>
+          <select class='dash-select' data-draw='f-status' aria-label='Status' data-source='in_scope' data-field='status'></select>
+          <select class='dash-select' data-draw='f-scope' aria-label='Scope' data-source='in_scope' data-field='scope'></select>
+          <select class='dash-select' data-draw='f-from' aria-label='From year' data-source='in_scope' data-field='year'></select>
+          <select class='dash-select' data-draw='f-to' aria-label='To year' data-source='in_scope' data-field='year'></select>
+        </div>
+      </details>
+      <p class='ppt-msgline' id='csv-ok' hidden>Download started. The file lists the developments shown, with sources, the date each was last checked and its licence terms (CC BY 4.0 for the summaries).</p>
+      <p class='ppt-msgline' id='csv-copied' hidden>Downloads aren't available here, so the CSV was copied to your clipboard instead. Paste it into a spreadsheet.</p>
+      <p class='ppt-msgline' id='csv-declined' hidden>Download cancelled.</p>
+      <p class='ppt-msgline' id='csv-fail' hidden>This view can't save or copy files. Open Sources beside the page to download the full data instead.</p>
+    </form>
+    <p class='ppt-hint' data-draw='search-hint' aria-live='polite'></p>
+    <div class='ppt-chips' data-draw='chips' aria-live='polite'></div>
+    <div class='ppt-empty' data-draw='empty' data-source='relax' aria-live='polite'></div>
+  </section>
+
+  <div class='ppt-explorer' id='explorer'>
+  <section class='ppt-section' id='timeline'>
+    <div class='ppt-head2 ppt-head2--row'>
+      <h2 class='ppt-h2'>Timeline by region</h2>
+      <div class='ppt-periods' role='group' aria-label='Period shown'>
+        <button type='button' class='ppt-period' data-period='all' aria-pressed='true'>All years</button>
+        <button type='button' class='ppt-period' data-period='12m' aria-pressed='false'>Last 12 months</button>
+      </div>
+    </div>
+    <ul class='ppt-howto'>
+      <li>One mark is one development; shape and colour show the type of measure.</li>
+      <li>A hollow mark means only the month is known.</li>
+      <li>Point at or tab to a mark to preview it; click or press Enter to open it beside the timeline. The left and right arrow keys then step through entries.</li>
+    </ul>
+    <div class='ppt-figure' data-source='filtered'>
+      <div class='ppt-legend' id='legend-timeline'>
+        <button type='button' class='ppt-leg' data-type='Strategy &amp; roadmap' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><circle cx='6' cy='6' r='5'/></svg>Strategy &amp; roadmap</button>
+        <button type='button' class='ppt-leg' data-type='Legislation &amp; regulation' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><rect x='1.5' y='1.5' width='9' height='9'/></svg>Legislation &amp; regulation</button>
+        <button type='button' class='ppt-leg' data-type='Funding &amp; incentives' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><polygon points='6,0.3 11.7,6 6,11.7 0.3,6'/></svg>Funding &amp; incentives</button>
+        <button type='button' class='ppt-leg' data-type='Trade &amp; supply-chain controls' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><polygon points='6,0.6 11.6,10.8 0.4,10.8'/></svg>Trade &amp; supply-chain controls</button>
+        <button type='button' class='ppt-leg' data-type='Programmes &amp; infrastructure' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><polygon points='0.4,1.2 11.6,1.2 6,11.4'/></svg>Programmes &amp; infrastructure</button>
+        <button type='button' class='ppt-leg' data-type='Recommendations &amp; advocacy' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><polygon points='4,0.5 8,0.5 8,4 11.5,4 11.5,8 8,8 8,11.5 4,11.5 4,8 0.5,8 0.5,4 4,4'/></svg>Advice &amp; advocacy (not government)</button>
+        <span class='ppt-leg' aria-hidden='true'><svg class='ppt-sym is-hollow' viewBox='0 0 12 12'><circle cx='6' cy='6' r='4.6'/></svg>Month-level date</span>
+      </div>
+      <div class='ppt-chart ppt-chart--timeline' data-draw='timeline'></div>
+    </div>
+  </section>
+
+  <section class='ppt-section' id='cards'>
+    <div class='ppt-head2'>
+      <h2 class='ppt-h2'>Developments, newest first</h2>
+      <p class='ppt-note'>Tap “Details” for the full entry, a link to share it and a citation.</p>
+    </div>
+    <ol class='ppt-cards' data-draw='cards' data-source='filtered'></ol>
+    <div class='ppt-more-wrap'><button type='button' class='ppt-btn' id='ppt-more-cards' hidden>Show more</button></div>
+  </section>
+
+  <section class='ppt-section' id='detail' aria-live='polite'>
+    <div class='ppt-detail-wrap'>
+      <p class='ppt-detail-k'><span id='detail-latest-label'>Latest development</span><span id='detail-sel-label' hidden>Selected development</span></p>
+      <div class='ppt-detail' data-draw='detail'></div>
+    </div>
+  </section>
+  </div>
+
+  <section class='ppt-section' id='charts'>
+    <div class='ppt-head2'>
+      <h2 class='ppt-h2'>Patterns</h2>
+      <p class='ppt-note'>Click a bar to filter the page by it; click again to clear.</p>
+    </div>
+    <div class='ppt-grid'>
+      <div class='ppt-panel' id='by-year'>
+        <h3 class='ppt-h3'>Developments found per year, by type</h3>
+        <div class='ppt-figure' data-source='by_year_type'>
+          <div class='ppt-legend' id='legend-year'>
+            <button type='button' class='ppt-leg' data-type='Strategy &amp; roadmap' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><rect x='1' y='1' width='10' height='10' rx='2'/></svg>Strategy</button>
+            <button type='button' class='ppt-leg' data-type='Legislation &amp; regulation' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><rect x='1' y='1' width='10' height='10' rx='2'/></svg>Legislation</button>
+            <button type='button' class='ppt-leg' data-type='Funding &amp; incentives' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><rect x='1' y='1' width='10' height='10' rx='2'/></svg>Funding</button>
+            <button type='button' class='ppt-leg' data-type='Trade &amp; supply-chain controls' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><rect x='1' y='1' width='10' height='10' rx='2'/></svg>Trade controls</button>
+            <button type='button' class='ppt-leg' data-type='Programmes &amp; infrastructure' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><rect x='1' y='1' width='10' height='10' rx='2'/></svg>Programmes</button>
+            <button type='button' class='ppt-leg' data-type='Recommendations &amp; advocacy' aria-pressed='false'><svg class='ppt-sym' viewBox='0 0 12 12' aria-hidden='true'><rect x='1' y='1' width='10' height='10' rx='2'/></svg>Advice</button>
+          </div>
+          <div class='ppt-chart ppt-chart--year' data-draw='by-year'></div>
+        </div>
+      </div>
+      <div class='ppt-panel' id='by-jurisdiction'>
+        <h3 class='ppt-h3'>Where activity is concentrated</h3>
+        <p class='ppt-note'>Developments per country or the EU.</p>
+        <div class='ppt-chart' data-draw='by-juris' data-source='by_jurisdiction'></div>
+      </div>
+      <div class='ppt-panel' id='by-technology'>
+        <h3 class='ppt-h3'>Technology focus</h3>
+        <p class='ppt-note'>Developments touching each technology; one development can cover several.</p>
+        <div class='ppt-chart' data-draw='by-tech' data-source='by_tech'></div>
+      </div>
+      <div class='ppt-panel' id='funding'>
+        <h3 class='ppt-h3'>Largest amounts earmarked for photonics</h3>
+        <p class='ppt-note'>Ranked, not summed: programmes differ in length and some include co-investment. In US dollars at the fixed rates under Method. Hatched bars are letters of intent or other amounts not yet final. For broader programmes only the stated photonics share is shown, and an amount already counted inside a larger one here is left out.</p>
+        <div class='ppt-chart' data-draw='funding' data-source='top_funding'></div>
+      </div>
+    </div>
+  </section>
+
+  <section class='ppt-section' id='all-developments'>
+    <div class='ppt-head2'>
+      <h2 class='ppt-h2'>All developments</h2>
+      <p class='ppt-note'>Newest first. Click a column heading to sort, a row to open the full entry, or a title to read the source.</p>
+    </div>
+    <div class='ppt-table-wrap'>
+      <table class='ppt-table' data-source='filtered' data-row-key='id'>
+        <thead>
+          <tr>
+            <th data-field='date' data-sort='date' aria-sort='descending' tabindex='0'>Date</th>
+            <th data-field='jurisdiction' data-sort='jurisdiction' aria-sort='none' tabindex='0'>Country or EU</th>
+            <th data-field='title'>Development</th>
+            <th data-field='type' data-sort='type' aria-sort='none' tabindex='0'>Type</th>
+            <th data-field='status' data-sort='status' aria-sort='none' tabindex='0'>Status</th>
+            <th data-field='amount_note' data-sort='amount' aria-sort='none' tabindex='0'>Headline amount</th>
+            <th data-field='summary'>Summary</th>
+          </tr>
+        </thead>
+        <tbody data-draw='rows'></tbody>
+      </table>
+    </div>
+    <div class='ppt-more-wrap'><button type='button' class='ppt-btn' id='ppt-more-rows' aria-expanded='false' hidden><span id='rows-more-l'>Show all developments</span><span id='rows-less-l' hidden>Show the first 25 only</span></button></div>
+  </section>
+
+  <details class='ppt-about' id='about'>
+    <summary>Method: scope, sources, corrections and reuse</summary>
+    <div class='ppt-about-body'>
+      <h3>Who made this</h3>
+      <p>An independent personal project, not affiliated with, funded by or endorsed by any employer or organisation. It was researched with AI assistance (Claude), and each entry was checked against its linked source on the date shown with it. It is selective, not exhaustive, and it is not legal, trade-compliance or investment advice: check the official source before relying on a status, especially for export controls.</p>
+
+      <h3>What counts</h3>
+      <p>Strategies, laws and bills, public funding, export, import and procurement controls, public programmes and infrastructure, and published advice, from January 2020, at national or EU level. Broader semiconductor, quantum or critical-materials measures are included only if their official text names photonics, optics, lasers or LiDAR, photonic chips (<abbr title='photonic integrated circuits'>PICs</abbr>), indium phosphide, gallium or germanium. <b data-draw='excluded' data-source='summary' data-field='excluded' data-row='0'>—</b> entries that were checked and failed this test are kept in the data file, marked out of scope, and left out of the page, the charts and the download.</p>
+      <p><b>Advice and advocacy</b> entries are included when an industry association, professional body, research or innovation centre, expert network convened for government, advisory council or think tank publishes a specific ask on photonics policy at national or EU level. The same rule applies to every group. They are drawn as a grey cross because they are not government action.</p>
+
+      <h3>Status</h3>
+      <dl>
+        <dt>In force</dt><dd>Adopted strategies, laws in effect and controls being applied.</dd>
+        <dt>Awarded or under way</dt><dd>Final awards, and programmes or facilities that have started.</dd>
+        <dt>Announced, not final</dt><dd>Letters of intent, preliminary terms and budget announcements.</dd>
+        <dt>Proposed, awaiting decision</dt><dd>Bills and formal proposals that have been tabled.</dd>
+        <dt>Reported, not confirmed</dt><dd>Plans known only from press reports or leaked drafts.</dd>
+        <dt>Paused or temporary</dt><dd>Measures suspended or in force only until a set date.</dd>
+        <dt>Advice or advocacy</dt><dd>Recommendations from outside government.</dd>
+        <dt>Withdrawn</dt><dd>Entries found to be wrong; they stay visible, marked, and the change log says why.</dd>
+      </dl>
+
+      <h3>Dates and amounts</h3>
+      <p>Status is given as of the date each entry was last checked. Dates are the announcement, signature or entry-into-force date as reported; where only the month is known, the entry sits on the first of the month and is drawn hollow. Amounts are shown in their original currency and, for ranking only, converted to US dollars at these fixed rates (US dollars per unit):</p>
+      <table class='ppt-fx'><tbody data-draw='fx'></tbody></table>
+
+      <h3>Sources and sharing</h3>
+      <p>Laws and strategies cite the official text where one is available, and funding cites the funder. Every entry also links to the Internet Archive's list of saved copies of its source, in case the page moves. Each entry has a link of its own, copied with “Copy link”, and a ready-made citation.</p>
+
+      <h3>Corrections</h3>
+      <p>To report an error, open the entry and use “Report a problem”: it copies a short report with the entry's ID that you can send to whoever shared this page with you. Errors are fixed at the next update and listed in the change log; no entry is silently deleted.</p>
+
+      <h3 id='log-h'>Change log</h3>
+      <ol class='ppt-log' data-draw='changelog' data-source='changelog'></ol>
+
+      <h3>Reuse and citation</h3>
+      <p>The compilation and its summaries may be reused under <abbr title='Creative Commons Attribution 4.0 International'>CC BY 4.0</abbr>, with credit. The linked sources keep their own terms. Suggested citation: Photonics Policy Tracker: North America, Europe &amp; Asia-Pacific (independent personal project), last updated <span data-draw='cite-date' data-source='changelog' data-field='date' data-row='0'>—</span>.</p>
+
+      <h3>Glossary</h3>
+      <dl>
+        <dt>1260H list</dt><dd>The Pentagon's list of Chinese military companies; from June 2026 the Defense Department may not contract directly with listed firms.</dd>
+        <dt>CHIPS</dt><dd>The US CHIPS and Science Act of 2022 and the funding programmes it created.</dd>
+        <dt>LOI and PMT</dt><dd>Letter of intent and preliminary memorandum of terms: CHIPS awards agreed in principle but not yet final.</dd>
+        <dt>NDAA</dt><dd>National Defense Authorization Act, the annual US defence law.</dd>
+        <dt>IPCEI</dt><dd>Important Project of Common European Interest: state aid the EU approves for large cross-border projects.</dd>
+        <dt>Chips JU</dt><dd>The Chips Joint Undertaking, the EU body that funds chip pilot lines such as PIXEurope.</dd>
+        <dt>CPO</dt><dd>Co-packaged optics: optical links built into the same package as a processor or switch chip.</dd>
+        <dt>PIC</dt><dd>Photonic integrated circuit: a chip that routes and processes light.</dd>
+        <dt>InP</dt><dd>Indium phosphide, the main material for lasers on optical-network chips.</dd>
+        <dt>Ga, Ge, Sb</dt><dd>Gallium, germanium and antimony, metals used in optoelectronics, infrared optics and fibre.</dd>
+        <dt>LiDAR</dt><dd>Laser-based distance sensing, used in cars, robots and mapping.</dd>
+        <dt>DUV, EUV</dt><dd>Deep and extreme ultraviolet lithography, the light-based tools that print chips.</dd>
+        <dt>LOI, PMT</dt><dd>Letter of intent and preliminary memorandum of terms: non-binding steps before a final US CHIPS award.</dd>
+        <dt>CHIPS</dt><dd>The US CHIPS and Science Act of 2022 and the programmes it funds.</dd>
+        <dt>1260H list</dt><dd>The US Defense Department's list of Chinese military companies.</dd>
+        <dt>NDAA</dt><dd>The annual US National Defense Authorization Act.</dd>
+        <dt>Section 232</dt><dd>US law that lets the President restrict imports on national-security grounds.</dd>
+        <dt>Chips JU</dt><dd>The EU's Chips Joint Undertaking, which funds pilot lines.</dd>
+        <dt>IPCEI</dt><dd>Important Project of Common European Interest: EU-approved state aid across several countries.</dd>
+        <dt>PERTE</dt><dd>Spain's strategic projects for economic recovery and transformation.</dd>
+        <dt>Horizon Europe, FP10</dt><dd>The EU's research programme for 2021–27 and its planned successor.</dd>
+        <dt>MOFCOM, MIIT, NDRC</dt><dd>China's commerce ministry, industry ministry and planning commission.</dd>
+        <dt>METI, NEDO</dt><dd>Japan's industry ministry and its research-funding agency.</dd>
+      </dl>
+    </div>
+  </details>
+
+  <p class='ppt-foot' id='footer'>An independent personal project, not affiliated with any organisation. Researched with AI assistance and checked against linked sources. Not legal or compliance advice. Summaries licensed CC BY 4.0.</p>
+</div>
+<script src="app.js"></script>
+<script src="features.js"></script>

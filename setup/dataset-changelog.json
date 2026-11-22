@@ -1,0 +1,16 @@
+{
+ "description": "One entry per public update: what was added, changed, corrected or withdrawn.",
+ "schedule": "Updated with each update of the tracker.",
+ "source": {
+  "format": "json",
+  "kind": "file",
+  "name": "changelog.json",
+  "url": "/_blob/REPLACE-WITH-NEW-ASSET-ID"
+ },
+ "staleAfterHours": 504,
+ "title": "Change log",
+ "updated": {
+  "at": "2026-11-22T17:25:00Z",
+  "by": "Claude"
+ }
+}

@@ -1,0 +1,22 @@
+{
+ "rows": [
+  {
+   "date": "2026-11-22",
+   "change": "Added 11 published reports and position papers that earlier updates had missed. Three come from the CORNERSTONE Photonics Innovation Centre (its October 2025 policy workshop, its May 2026 case for a £305M UK silicon-photonics pilot line, and its June 2026 white paper on barriers to commercialisation). The others: UKTIN's 2024 photonics capability paper, a Chinese Academy of Sciences report on photonics-electronics convergence, two PHOTONICS GERMANY papers, Photonics France's call for a national plan, PhotonDelta and BOM's defence study, QuIC's Chips Act 2.0 response and a Wilson Center commentary. Advice and advocacy entries now also come from research and innovation centres and expert networks convened for government, applied the same way to every group."
+  },
+  {
+   "date": "2026-11-20",
+   "change": "Every entry shown re-checked against its source, with fresh searches for anything time-sensitive. Added one missing entry: the Pentagon's June 2026 1260H update listing Zhongji Innolight and RoboSense. Corrected: Coherent's 2024 preliminary terms re-sourced (NIST's page now shows the later $50M letter-of-intent figure; the 2024 terms were $33M, announced 5 Dec 2024); Singapore's NSTIC re-dated to 1 Mar 2024 and Taiwan's AI infrastructure plan to 22 Jul 2025; Queensland strategy figure A$89.7M; France's €550M described as its IPCEI contribution; Chips Act 2.0 jobs figure removed; Xanadu support no longer called repayable; China's electronics plan re-sourced to the official Q&A. Eight links replaced in all, and text corrected on 23 entries, mostly where a summary said more than its source."
+  },
+  {
+   "date": "2026-11-20",
+   "change": "Scope and status rules applied to every entry. Five entries whose official text does not name photonics moved out of scope: the CHIPS sections of the FY2021 NDAA, the Connected Vehicle Security Act (S.4429), round 2 of Australia's Critical Technologies Challenge Program, a science-societies letter on grant oversight, and China's November 2026 pause on its October 2025 controls. Statuses now follow a published rule, with a new 'Reported' status for press reports and leaks. Ten entries re-sourced to official text or the funder. Corrections: PsiQuantum package dated 30 Apr 2024 (not 29 Apr) and described as equity and loans; QuiX Quantum mission has seven partners (not nine); FCC transceiver report dated 4 Aug 2026 (not 5 Aug); India amounts no longer quote dollar figures that disagreed with the chart."
+  }
+ ],
+ "meta": [
+  {
+   "label": "What this is",
+   "value": "One entry per public update of the tracker: what was added, changed, corrected or withdrawn."
+  }
+ ]
+}
