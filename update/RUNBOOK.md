@@ -25,7 +25,7 @@ Data lives in two files the page reads: `data/policies.json` (one row per develo
 | Reported | Reported, not confirmed | Plans known only from press reports or leaked drafts |
 | Temporary / suspended | Paused or temporary | Measures suspended or in force only until a set date |
 | Recommended | Advice or advocacy | Asks from outside government |
-| Withdrawn / corrected | Withdrawn | A row found to be wrong. Never delete a row: mark it and log why. |
+| Withdrawn / corrected | Withdrawn | A measure cancelled or withdrawn by those who made it, or a row found to be wrong. The summary says which. Never delete a row: mark it and log why. |
 
 **Source rule.** Laws and strategies cite the official text where it exists; funding cites the funder; a row naming a company cites an official source or is marked Reported. Summaries are paraphrased, with at most one short quoted phrase.
 

@@ -19,7 +19,7 @@ This is a record of what governments, and the groups advising them, have done ab
 - consultation responses and evidence to inquiries, which are not tracked separately from the published paper
 - measures that fail the scope test above. They stay in the data with `in_scope: false` and an `excluded_reason`, but are left off the page, the charts and the download.
 
-**Status** is the status on the date the entry was last checked (`last_verified`): in force, awarded or under way, announced but not final, proposed and awaiting a decision, reported but not confirmed, paused or temporary, advice, or withdrawn. An entry found to be wrong is never deleted: it is marked withdrawn and the change log says why. Every open item carries the next date or event to watch.
+**Status** is the status on the date the entry was last checked (`last_verified`): in force, awarded or under way, announced but not final, proposed and awaiting a decision, reported but not confirmed, paused or temporary, advice, or withdrawn. Withdrawn covers both measures that were cancelled and entries found to be wrong; neither is deleted, the entry says which, and the change log says why. Every open item carries the next date or event to watch.
 
 **Amounts** are in millions of the original currency. For ranking only, the page converts them to US dollars at fixed rates, listed under "Method" on the page.
 
