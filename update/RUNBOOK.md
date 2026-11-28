@@ -6,7 +6,7 @@ Data lives in two files the page reads: `data/policies.json` (one row per develo
 ## Cadence
 
 - Roughly every two weeks. The page says "updated roughly every two weeks" and never names the next date.
-- Date-triggered checks happen on the date itself, whatever the fortnightly schedule: any `watch_date` that falls due (for example 24 Nov 2026, the expected EU Quantum Act proposal; 27 Nov 2026, China's Ga/Ge/Sb pause; 3 Jan 2027, end of the 119th Congress; 10 Jan 2027, China's pause on its October-2025 controls).
+- Date-triggered checks happen on the date itself, whatever the fortnightly schedule: any `watch_date` that falls due (for example 24 Nov 2026, the expected EU Quantum Act proposal; 27 Jan 2027, China's Ga/Ge/Sb pause (continued from 27 Nov 2026); 3 Jan 2027, end of the 119th Congress; 10 Jan 2027, China's pause on its October-2025 controls).
 - Trade and export-control rows (Ga/Ge/Sb, 1260H, FCC, Section 232) must have been checked within 7 days before the page is shared with anyone new.
 - No automatic switch to weekly. The February 2027 review asks two questions: did each update land on time, and how many corrections were needed?
 

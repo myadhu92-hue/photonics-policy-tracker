@@ -11,7 +11,7 @@ from urllib.parse import quote
 HERE = Path(__file__).resolve().parent.parent / "data"
 RAW = HERE / "policies_raw.json"
 LOG = HERE / "changelog_raw.json"
-TODAY = date(2026, 11, 22)
+TODAY = date(2026, 11, 28)
 
 TYPES = {"Strategy & roadmap", "Legislation & regulation", "Funding & incentives",
          "Trade & supply-chain controls", "Programmes & infrastructure",
