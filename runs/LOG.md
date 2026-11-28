@@ -6,6 +6,7 @@ One line per update: how much was checked, what was found and what changed. What
 |---|---|---|---|---|---|---|
 | 2026-11-20 (full re-check) | 109 | 0 new | 0 | 33 | 5 | pending |
 | 2026-11-22 (advice and advocacy) | — | 21 | 11 | — | — | pending |
+| 2026-11-28 (Ga/Ge/Sb watch date) | 3 | 1 | 1 | 2 | 0 | pending |
 
 ## 2026-11-22: advice and advocacy
 
@@ -27,3 +28,7 @@ Left out, with reason:
 To look at in a later update: Taiwan's 2026 A+ silicon photonics R&D initiative (no official source with a date and budget found yet).
 
 Ga/Ge/Sb pause (ends 27 Nov 2026): searched again on 22 Nov; no extension or replacement found.
+
+## 2026-11-28: Ga/Ge/Sb watch date
+
+The pause on clause 2 of MOFCOM Announcement No. 46 of 2024 was due to end on 27 Nov 2026. MOFCOM Announcement No. 59 of 2026 (signed 23 Nov, published 24 Nov) continues it from 28 Nov 2026 to 27 Jan 2027. Added cn-2026-ga-ge-extension; updated cn-2025-ga-ge-suspension and cn-2024-us-ban. Official text read on MOFCOM's aqygzj.mofcom.gov.cn copy; the www.mofcom.gov.cn copy did not load. Old data assets of 22 Nov could not be deleted in this run and are still in the tracker's asset store.
